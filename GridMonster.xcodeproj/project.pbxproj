@@ -39,6 +39,7 @@
 		8C37729C1363A372005D9E41 /* AQGridView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C3772911363A372005D9E41 /* AQGridView.m */; };
 		8C37729E1363A392005D9E41 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C37729D1363A392005D9E41 /* QuartzCore.framework */; };
 		8C3772A41363AEEE005D9E41 /* GridTestObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C3772A31363AEEE005D9E41 /* GridTestObject.m */; };
+		8C3772B11363B274005D9E41 /* LoremIpsum.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C3772AF1363B273005D9E41 /* LoremIpsum.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -104,6 +105,8 @@
 		8C37729D1363A392005D9E41 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		8C3772A21363AEEE005D9E41 /* GridTestObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GridTestObject.h; sourceTree = "<group>"; };
 		8C3772A31363AEEE005D9E41 /* GridTestObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GridTestObject.m; sourceTree = "<group>"; };
+		8C3772AF1363B273005D9E41 /* LoremIpsum.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoremIpsum.m; sourceTree = "<group>"; };
+		8C3772B01363B274005D9E41 /* LoremIpsum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoremIpsum.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -152,7 +155,7 @@
 		8C3772321363A22C005D9E41 /* GridMonster */ = {
 			isa = PBXGroup;
 			children = (
-				8C3772A51363B088005D9E41 /* Supporting Files */,
+				8C3772B21363B28B005D9E41 /* Supporting Tools */,
 				8C3772541363A26B005D9E41 /* Grid Toolkits */,
 				8C37723B1363A22C005D9E41 /* GridMonsterAppDelegate.h */,
 				8C37723C1363A22C005D9E41 /* GridMonsterAppDelegate.m */,
@@ -272,21 +275,21 @@
 			path = CHGridLayout;
 			sourceTree = "<group>";
 		};
-		8C3772A51363B088005D9E41 /* Supporting Files */ = {
+		8C3772B21363B28B005D9E41 /* Supporting Tools */ = {
 			isa = PBXGroup;
 			children = (
-				8C3772A61363B0AC005D9E41 /* Lorem Ipsum */,
+				8C3772B31363B2BA005D9E41 /* Lorem Ipsum Generator */,
 			);
-			name = "Supporting Files";
-			path = "../supporting-libraries";
+			name = "Supporting Tools";
 			sourceTree = "<group>";
 		};
-		8C3772A61363B0AC005D9E41 /* Lorem Ipsum */ = {
+		8C3772B31363B2BA005D9E41 /* Lorem Ipsum Generator */ = {
 			isa = PBXGroup;
 			children = (
+				8C3772AF1363B273005D9E41 /* LoremIpsum.m */,
+				8C3772B01363B274005D9E41 /* LoremIpsum.h */,
 			);
-			name = "Lorem Ipsum";
-			path = "lorem-lpsum";
+			name = "Lorem Ipsum Generator";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -377,6 +380,7 @@
 				8C37729B1363A372005D9E41 /* AQGridViewAnimatorItem.m in Sources */,
 				8C37729C1363A372005D9E41 /* AQGridView.m in Sources */,
 				8C3772A41363AEEE005D9E41 /* GridTestObject.m in Sources */,
+				8C3772B11363B274005D9E41 /* LoremIpsum.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

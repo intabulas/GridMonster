@@ -29,12 +29,23 @@
     OHGridView *_ohGridView;    
      
     // Test Data                                                             
-    NSMutableArray *_gridTestData;                                                             
+    NSMutableArray *_gridTestData;   
+    int _currentGrid;
                                                              
+    IBOutlet UILabel  *gridControlNameLabel;
+    IBOutlet UILabel  *gridControlDetailLabel;                                                             
+    IBOutlet UILabel  *gridControlNotesLabel;                                       
+    IBOutlet UIButton *gridControlLinkLabel;                                        
                                                              
 }
 
+@property (nonatomic,retain) IBOutlet UILabel  *gridControlNameLabel;
+@property (nonatomic,retain) IBOutlet UILabel  *gridControlDetailLabel;
+@property (nonatomic,retain) IBOutlet UILabel  *gridControlNotesLabel;
+@property (nonatomic,retain) IBOutlet UIButton *gridControlLinkLabel;                                        
+
 - (IBAction) changeGridToolkit:(id)sender;
+- (IBAction) openControlInSafari:(id)sender;
 
 /* Shared Generic Delegate Methods - AQ and OH have a same named datasource method */
 

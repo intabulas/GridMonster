@@ -16,6 +16,7 @@
 
 #import "MMGridView.h"
 #import "MMGridViewCell.h"
+#import "MMGridViewDefaultCell.h"
 
 #import "GridTestObject.h"
 #import "LoremIpsum.h"
@@ -40,10 +41,15 @@
 
     // Test Data
     - (void) createTestData;
+    - (UIColor*) generateRandomColor;
 
 @end
 
 @implementation GridMonsterViewController
+@synthesize gridControlNameLabel   = _gridControlNameLabel;
+@synthesize gridControlNotesLabel  = _gridControlNotesLabel;
+@synthesize gridControlDetailLabel = _gridControlDetailLabel;
+@synthesize gridControlLinkLabel   = _gridControlLinkLabel;
 
 - (void)dealloc {
     [_aqGridView release];
@@ -68,7 +74,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    _currentGrid = 2;
+    
     [self createTestData];    
+    
+    [self setupMMGridView];
+    
 }
 
 - (void)viewDidUnload {
@@ -82,19 +93,53 @@
     return YES;
 }
 
+- (void) didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
+//    BOOL isLandscape = UIInterfaceOrientationIsLandscape([[UIDevice currentDevice] orientation]);
+
+    NSLog(@"Bounds are %@", NSStringFromCGRect(self.view.bounds));
+    
+}
+
+- (void) teardownActiveGrid {
+    switch (_currentGrid) {
+        case 0:
+            [self tearDownAQGridView];
+            break;
+        case 1:
+            [self tearDownCHGridView];
+            break;
+        case 2:
+            [self tearDownMMGridView];
+            break;
+        case 3:
+            [self tearDownOHGridView];
+            break;
+            
+        default:
+            break;
+    }
+}
+
 /* */
 - (IBAction) changeGridToolkit:(id)sender {
     
     UIBarButtonItem *_gridTypeButton = (UIBarButtonItem*)sender;
     
+    [self teardownActiveGrid];
+    
+    
     switch (_gridTypeButton.tag) {
         case 0:
+            [self setupAQGridView];
             break;
         case 1:
+            [self setupCHGridView];            
             break;
         case 2:
+            [self setupMMGridView];            
             break;
         case 3:
+            [self setupOHGridView];            
             break;
             
         default:
@@ -112,7 +157,8 @@
     for ( int x = 0; x < 100; x++ ) {
         GridTestObject *_testObject = [[GridTestObject alloc] init];
         [_testObject setTestnumber:x];
-      //  [_testObject setTestsentance:[_loremGenerator words:10];
+        [_testObject setTestsentance:[_loremGenerator words:7]];
+        [_testObject setTestcolor:[self generateRandomColor]];
         [_gridTestData addObject:_testObject];
         
         [_testObject release];
@@ -122,6 +168,18 @@
     
 }
 
+- (UIColor*) generateRandomColor {
+    float rand_max = RAND_MAX;
+    
+    float red   = arc4random() / rand_max;
+    float green = arc4random() / rand_max;
+    float blue  = arc4random() / rand_max;
+    return [UIColor colorWithRed:red green:green blue:blue alpha:1.0];
+}
+
+- (IBAction) openControlInSafari:(id)sender {
+   [[ UIApplication sharedApplication ] openURL:[NSURL URLWithString:_gridControlLinkLabel.titleLabel.text]];    
+}
 
 
 #pragma mark =[ Grid Toolkit Helpers and Delegates ]=
@@ -134,8 +192,19 @@
 }
 
 - (void) setupAQGridView {    
-    [_aqGridView removeFromSuperview];
-    [_aqGridView release], _aqGridView = nil;    
+    
+    [_gridControlNameLabel   setText:@"AQGridView"];
+    [_gridControlDetailLabel setText:@"An grid view for iPhone/iPad, designed to look similar to NSCollectionView"];
+    [_gridControlNotesLabel  setText:@""];  
+    [_gridControlLinkLabel   setTitle:@"https://github.com/AlanQuatermain/AQGridView" forState:UIControlStateNormal];
+    
+    _aqGridView = [[AQGridView alloc] initWithFrame:CGRectMake(0,95,self.view.bounds.size.width,self.view.bounds.size.height-45)];
+    [_aqGridView setDelegate:self];
+    [_aqGridView setDataSource:self];
+    [_aqGridView setBackgroundColor:[UIColor clearColor]];
+    [self.view addSubview:_aqGridView];
+    _currentGrid = 0;
+    [_aqGridView reloadData];
 }
 
 /* AQGridView Datasource Methods */
@@ -143,7 +212,17 @@
 /* USES A GENERIC HANDLER FOR numberOfItemsInGridView */
 
 - (AQGridViewCell *) gridView: (AQGridView *) gridView cellForItemAtIndex: (NSUInteger) index {
-    return nil; 
+    static NSString * PlainCellIdentifier = @"PlainCellIdentifier";
+
+    GridTestObject *_testObject = [_gridTestData objectAtIndex:index];
+
+    AQGridViewCell * cell = (AQGridViewCell *)[gridView dequeueReusableCellWithIdentifier: PlainCellIdentifier];
+	if ( cell == nil ) {
+		cell = [[[AQGridViewCell alloc] initWithFrame: CGRectMake(0.0, 0.0, 200.0, 150.0) reuseIdentifier: PlainCellIdentifier] autorelease];
+		[cell.contentView setBackgroundColor:[_testObject testcolor]];
+	}
+    
+    return ( cell );
 }
 
 /* AQGridView Delegte Methods - ALL OPTIONS IN AQGRIDVIEW */
@@ -180,6 +259,19 @@
 }
 
 - (void) setupCHGridView {    
+    [_gridControlNameLabel   setText:@"CHGridView"];   
+    [_gridControlDetailLabel setText:@"Objective-C reusable scrollable grid view for Cocoa Touch modeled after UITableView"];
+    [_gridControlNotesLabel  setText:@""];
+    [_gridControlLinkLabel   setTitle:@"https://github.com/camh/CHGridView" forState:UIControlStateNormal];    
+    
+    _chGridView = [[CHGridView alloc] initWithFrame:CGRectMake(0,95,self.view.bounds.size.width,self.view.bounds.size.height-45)];
+    [_chGridView setDelegate:self];
+    [_chGridView setDataSource:self];
+    [_chGridView setBackgroundColor:[UIColor clearColor]];
+    [self.view addSubview:_chGridView];
+    
+        _currentGrid = 1;
+    [_chGridView reloadData];
 }
 
 /* CHGridView Datasource */
@@ -188,13 +280,24 @@
 }
 
 - (CHTileView *)tileForIndexPath:(CHGridIndexPath)indexPath inGridView:(CHGridView *)gridView {
-    return nil;    
+	static NSString *TileIndentifier = @"Tile";
+
+    GridTestObject *_testObject = [_gridTestData objectAtIndex:indexPath.tileIndex];
+
+	CHTileView *tile = (CHTileView *)[gridView dequeueReusableTileWithIdentifier:TileIndentifier];
+    
+	if(tile == nil)
+		tile = [[[CHTileView alloc] initWithFrame:CGRectZero reuseIdentifier:TileIndentifier] autorelease];
+    
+	[tile setContentBackgroundColor:_testObject.testcolor];
+    
+	return tile;
 }
 
 // optional
-//- (int)numberOfSectionsInGridView:(CHGridView *)gridView {
-//    return 1;
-//}
+- (int)numberOfSectionsInGridView:(CHGridView *)gridView {
+    return 1;
+}
 //
 //- (NSString *)titleForHeaderOfSection:(int)section inGridView:(CHGridView *)gridView {    
 //}
@@ -221,6 +324,18 @@
 }
 
 - (void) setupMMGridView {    
+    [_gridControlNameLabel   setText:@"MMGridView"];    
+    [_gridControlDetailLabel setText:@"A simple grid view / dashboard component for iOS"];
+    [_gridControlNotesLabel  setText:@"This grid view scrolls left to right vs up and down"];
+    [_gridControlLinkLabel   setTitle:@"https://github.com/provideal/MMGridView" forState:UIControlStateNormal];        
+    
+    _mmGridView = [[MMGridView alloc] initWithFrame:CGRectMake(0,95,self.view.bounds.size.width,self.view.bounds.size.height-45)];
+    [_mmGridView setDelegate:self];
+    [_mmGridView setDataSource:self];
+    [_mmGridView setBackgroundColor:[UIColor clearColor]];
+    [self.view addSubview:_mmGridView];
+    
+    _currentGrid = 2;
 }
 
 
@@ -231,7 +346,14 @@
 }
 
 - (MMGridViewCell *)gridView:(MMGridView *)gridView cellAtIndex:(NSUInteger)index {    
-    return nil;    
+    
+    GridTestObject *_testObject = [_gridTestData objectAtIndex:index];
+    
+    MMGridViewDefaultCell *cell = [[[MMGridViewDefaultCell alloc] initWithFrame:CGRectNull] autorelease];
+    cell.textLabel.text = [_testObject testsentance];
+    [cell.backgroundView setBackgroundColor:[_testObject testcolor]];
+    return cell;    
+   
 }
 
 /* MMGridView Delegate - ALL OPTIONAL */
@@ -241,9 +363,10 @@
 //
 //- (void)gridView:(MMGridView *)gridView didDoubleTappedCell:(MMGridViewCell *)cell atIndex:(NSUInteger)index {    
 //}
-//
-//- (void)gridView:(MMGridView *)gridView changedPageToIndex:(NSUInteger)index {    
-//}
+
+/* MMGrid View marks this optional but doesn't check it delegate respondes to it */
+- (void)gridView:(MMGridView *)gridView changedPageToIndex:(NSUInteger)index {    
+}
 
 
 
@@ -255,6 +378,17 @@
 }
 
 - (void) setupOHGridView {    
+    [_gridControlNameLabel   setText:@"OHGridView"];    
+    [_gridControlDetailLabel setText:@"View that display cells as a grid. Uses quite the same API as UITableView"];    
+    [_gridControlNotesLabel  setText:@""];
+    [_gridControlLinkLabel   setTitle:@"https://github.com/AliSoftware/OHGridView" forState:UIControlStateNormal];        
+
+    _ohGridView = [[OHGridView alloc] initWithFrame:CGRectMake(0,95,self.view.bounds.size.width,self.view.bounds.size.height-45)];
+    [_ohGridView setDelegate:self];
+    [_ohGridView setDataSource:self];
+    [_ohGridView setBackgroundColor:[UIColor clearColor]];
+    [self.view addSubview:_ohGridView];  
+    _currentGrid = 3;    
 }
 
 
@@ -263,7 +397,20 @@
 /* USES A GENERIC HANDLER FOR numberOfItemsInGridView */
 
 -(OHGridViewCell*)gridView:(OHGridView*)aGridView cellAtIndexPath:(NSIndexPath*)indexPath {
-    return nil;    
+	NSUInteger _index = [aGridView indexForIndexPath:indexPath];
+
+    GridTestObject *_testObject = [_gridTestData objectAtIndex:_index];
+    
+	OHGridViewCell* cell = [aGridView dequeueReusableCell];
+	if (!cell) {
+		cell = [OHGridViewCell cell];
+        
+		cell.backgroundColor = [_testObject testcolor];
+	}
+    
+	cell.textLabel.text = [_testObject testsentance];
+    
+	return cell;  
 }
 
 /* OHGridView Delegate - ALL ARE OPTIONAL */

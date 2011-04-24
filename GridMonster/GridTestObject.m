@@ -12,11 +12,17 @@
 @implementation GridTestObject
 @synthesize testnumber   = _testnumber;
 @synthesize testsentance = _testsentance;
+@synthesize testcolor    = _testcolor;
 
 - (void) dealloc {
+    [_testsentance release], _testsentance = nil;
+    [_testcolor release], _testcolor = nil;
     [super dealloc];
 }
 
+- (NSString*) description {
+    return [NSString stringWithFormat:@"<GridTestObject: number:%d sentence:%@>", _testnumber, _testsentance];
+}
 
 
 @end

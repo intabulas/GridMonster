@@ -12,7 +12,8 @@
 @interface GridTestObject : NSObject {
 }
 
-@property (nonatomic)           int  testnumber;
-@property (nonatomic,copy) NSString *testsentance;
+@property (nonatomic)             int  testnumber;
+@property (nonatomic,copy)   NSString *testsentance;
+@property (nonatomic,retain)  UIColor *testcolor;
 
 @end
