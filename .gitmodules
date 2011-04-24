@@ -1,0 +1,12 @@
+[submodule "grid-toolkits/MMGridView"]
+	path = grid-toolkits/MMGridView
+	url = https://github.com/provideal/MMGridView.git
+[submodule "grid-toolkits/AQGridView"]
+	path = grid-toolkits/AQGridView
+	url = https://github.com/AlanQuatermain/AQGridView.git
+[submodule "grid-toolkits/CHGridView"]
+	path = grid-toolkits/CHGridView
+	url = https://github.com/camh/CHGridView.git
+[submodule "grid-toolkits/OHGridView"]
+	path = grid-toolkits/OHGridView
+	url = https://github.com/AliSoftware/OHGridView.git
