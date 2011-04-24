@@ -1,0 +1,17 @@
+# xcode noise
+build/*
+*.pbxuser
+*.mode1v3
+*.perspectivev3
+slurper_config.yml
+*.slurper
+# osx noise
+.DS_Store
+profile
+*.moved-aside
+*.xcbkptlist
+UserInterfaceState.xcuserstate
+*.xcworkspace
+!default.xcworkspace
+xcuserdata
+profile
