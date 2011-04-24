@@ -40,6 +40,11 @@
 @property (nonatomic,retain) IBOutlet UIButton *gridControlLinkLabel;                                        
 @property (nonatomic,retain) IBOutlet UISlider *gridColumnCountSlider;
 
+@property (nonatomic,retain) IBOutlet UIBarButtonItem *aqGridButton;
+@property (nonatomic,retain) IBOutlet UIBarButtonItem *chGridButton;
+@property (nonatomic,retain) IBOutlet UIBarButtonItem *mmGridButton;
+@property (nonatomic,retain) IBOutlet UIBarButtonItem *ohGridButton;
+
 - (IBAction) changeGridToolkit:(id)sender;
 - (IBAction) openControlInSafari:(id)sender;
 - (IBAction) columnCountSliderChanged:(id)sender;

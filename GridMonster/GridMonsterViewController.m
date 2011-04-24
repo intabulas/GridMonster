@@ -52,6 +52,10 @@
 @synthesize gridContainer          = _gridContainer;
 @synthesize gridColumnCountSlider  = _gridColumnCountSlider;
 
+@synthesize aqGridButton = _aqGridButton;
+@synthesize chGridButton = _chGridButton;
+@synthesize mmGridButton = _mmGridButton;
+@synthesize ohGridButton = _ohGridButton;
 
 - (void)dealloc {
     [_aqGridView release];
@@ -80,7 +84,7 @@
     
     [self createTestData:100];    
     
-    [self setupMMGridView];
+    [self setupAQGridView];
     
 }
 
@@ -109,7 +113,7 @@
         case 2:
             [self tearDownMMGridView];
             break;
-        case 3:
+        case 3:            
             [self tearDownOHGridView];
             break;
             
@@ -209,11 +213,14 @@
 
 #pragma mark ==< AQGridView >==
 - (void) tearDownAQGridView {    
+    [_aqGridButton setStyle:UIBarButtonItemStyleBordered];    
     [_aqGridView removeFromSuperview];
     [_aqGridView release], _aqGridView = nil;        
 }
 
 - (void) setupAQGridView {    
+    
+    [_aqGridButton setStyle:UIBarButtonItemStyleDone];    
     
     [_gridControlNameLabel   setText:@"AQGridView"];
     [_gridControlNotesLabel  setText:@""];  
@@ -224,7 +231,7 @@
     [_aqGridView setDataSource:self];
     [_aqGridView setBackgroundColor:[UIColor clearColor]];
     [_aqGridView setAutoresizingMask:UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth];
-
+    
     [_gridContainer addSubview:_aqGridView];
 
     _currentGrid = 0;    
@@ -278,11 +285,15 @@
 
 #pragma mark ==< CHGridView >==
 - (void) tearDownCHGridView {    
+    [_chGridButton setStyle:UIBarButtonItemStyleBordered];    
     [_chGridView removeFromSuperview];
     [_chGridView release], _chGridView = nil;        
 }
 
 - (void) setupCHGridView {    
+    
+    [_chGridButton setStyle:UIBarButtonItemStyleDone];    
+    
     [_gridControlNameLabel   setText:@"CHGridView"];   
     [_gridControlNotesLabel  setText:@""];
     [_gridControlLinkLabel   setTitle:@"https://github.com/camh/CHGridView" forState:UIControlStateNormal];    
@@ -343,11 +354,16 @@
 
 #pragma mark ==< MMGridView >==
 - (void) tearDownMMGridView {    
+    [_mmGridButton setStyle:UIBarButtonItemStyleBordered];        
+    
     [_mmGridView removeFromSuperview];
     [_mmGridView release], _mmGridView = nil;    
 }
 
 - (void) setupMMGridView {    
+    
+    [_mmGridButton setStyle:UIBarButtonItemStyleDone];    
+    
     [_gridControlNameLabel   setText:@"MMGridView"];    
     [_gridControlNotesLabel  setText:@"This grid view scrolls left to right vs up and down"];
     [_gridControlLinkLabel   setTitle:@"https://github.com/provideal/MMGridView" forState:UIControlStateNormal];        
@@ -396,12 +412,17 @@
 
 #pragma mark ==< OHGridView >==
 - (void) tearDownOHGridView {    
+    [_ohGridButton setStyle:UIBarButtonItemStyleBordered];        
+    
     [_ohGridView removeFromSuperview];
     [_ohGridView release], _ohGridView = nil;    
     
 }
 
 - (void) setupOHGridView {    
+    
+    [_ohGridButton setStyle:UIBarButtonItemStyleDone];    
+    
     [_gridControlNameLabel   setText:@"OHGridView"];    
     [_gridControlNotesLabel  setText:@""];
     [_gridControlLinkLabel   setTitle:@"https://github.com/AliSoftware/OHGridView" forState:UIControlStateNormal];        
