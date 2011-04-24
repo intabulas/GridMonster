@@ -28,10 +28,10 @@ This example links in the grid libraries via git submodules so be sure after you
 ## Other Libraries Used
 
 Some additional open source code was used in this example  
-`
-Objective-C Lorem Ipsum Generator
-Author: Dav Yaginuma
-https://github.com/dav/Objective-C-Lorem-Ipsum-Generator
+
+Objective-C Lorem Ipsum Generator  
+Author: Dav Yaginuma  
+[https://github.com/dav/Objective-C-Lorem-Ipsum-Generator](https://github.com/dav/Objective-C-Lorem-Ipsum-Generator)  
 
 # Enjoy
 
