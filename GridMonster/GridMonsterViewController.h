@@ -31,16 +31,11 @@
     // Test Data                                                             
     NSMutableArray *_gridTestData;   
     int _currentGrid;
-                                                             
-    IBOutlet UILabel  *gridControlNameLabel;
-    IBOutlet UILabel  *gridControlDetailLabel;                                                             
-    IBOutlet UILabel  *gridControlNotesLabel;                                       
-    IBOutlet UIButton *gridControlLinkLabel;                                        
-                                                             
+                                                                                                          
 }
 
+@property (nonatomic,retain) IBOutlet UIView   *gridContainer;                                                             
 @property (nonatomic,retain) IBOutlet UILabel  *gridControlNameLabel;
-@property (nonatomic,retain) IBOutlet UILabel  *gridControlDetailLabel;
 @property (nonatomic,retain) IBOutlet UILabel  *gridControlNotesLabel;
 @property (nonatomic,retain) IBOutlet UIButton *gridControlLinkLabel;                                        
 

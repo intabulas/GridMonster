@@ -48,8 +48,8 @@
 @implementation GridMonsterViewController
 @synthesize gridControlNameLabel   = _gridControlNameLabel;
 @synthesize gridControlNotesLabel  = _gridControlNotesLabel;
-@synthesize gridControlDetailLabel = _gridControlDetailLabel;
 @synthesize gridControlLinkLabel   = _gridControlLinkLabel;
+@synthesize gridContainer          = _gridContainer;
 
 - (void)dealloc {
     [_aqGridView release];
@@ -73,7 +73,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+        
     _currentGrid = 2;
     
     [self createTestData];    
@@ -93,12 +93,8 @@
     return YES;
 }
 
-- (void) didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
-//    BOOL isLandscape = UIInterfaceOrientationIsLandscape([[UIDevice currentDevice] orientation]);
-
-    NSLog(@"Bounds are %@", NSStringFromCGRect(self.view.bounds));
-    
-}
+//- (void) didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
+//}
 
 - (void) teardownActiveGrid {
     switch (_currentGrid) {
@@ -194,16 +190,18 @@
 - (void) setupAQGridView {    
     
     [_gridControlNameLabel   setText:@"AQGridView"];
-    [_gridControlDetailLabel setText:@"An grid view for iPhone/iPad, designed to look similar to NSCollectionView"];
     [_gridControlNotesLabel  setText:@""];  
     [_gridControlLinkLabel   setTitle:@"https://github.com/AlanQuatermain/AQGridView" forState:UIControlStateNormal];
     
-    _aqGridView = [[AQGridView alloc] initWithFrame:CGRectMake(0,95,self.view.bounds.size.width,self.view.bounds.size.height-45)];
+    _aqGridView = [[AQGridView alloc] initWithFrame:CGRectMake(0,0,_gridContainer.bounds.size.width,_gridContainer.bounds.size.height)];
     [_aqGridView setDelegate:self];
     [_aqGridView setDataSource:self];
     [_aqGridView setBackgroundColor:[UIColor clearColor]];
-    [self.view addSubview:_aqGridView];
-    _currentGrid = 0;
+    [_aqGridView setAutoresizingMask:UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth];
+
+    [_gridContainer addSubview:_aqGridView];
+
+    _currentGrid = 0;    
     [_aqGridView reloadData];
 }
 
@@ -260,17 +258,17 @@
 
 - (void) setupCHGridView {    
     [_gridControlNameLabel   setText:@"CHGridView"];   
-    [_gridControlDetailLabel setText:@"Objective-C reusable scrollable grid view for Cocoa Touch modeled after UITableView"];
     [_gridControlNotesLabel  setText:@""];
     [_gridControlLinkLabel   setTitle:@"https://github.com/camh/CHGridView" forState:UIControlStateNormal];    
     
-    _chGridView = [[CHGridView alloc] initWithFrame:CGRectMake(0,95,self.view.bounds.size.width,self.view.bounds.size.height-45)];
+    _chGridView = [[CHGridView alloc] initWithFrame:CGRectMake(0,0,_gridContainer.bounds.size.width,_gridContainer.bounds.size.height)];
     [_chGridView setDelegate:self];
     [_chGridView setDataSource:self];
     [_chGridView setBackgroundColor:[UIColor clearColor]];
-    [self.view addSubview:_chGridView];
+    [_chGridView setAutoresizingMask:UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth];    
+    [_gridContainer addSubview:_chGridView];
     
-        _currentGrid = 1;
+    _currentGrid = 1;
     [_chGridView reloadData];
 }
 
@@ -325,17 +323,17 @@
 
 - (void) setupMMGridView {    
     [_gridControlNameLabel   setText:@"MMGridView"];    
-    [_gridControlDetailLabel setText:@"A simple grid view / dashboard component for iOS"];
     [_gridControlNotesLabel  setText:@"This grid view scrolls left to right vs up and down"];
     [_gridControlLinkLabel   setTitle:@"https://github.com/provideal/MMGridView" forState:UIControlStateNormal];        
     
-    _mmGridView = [[MMGridView alloc] initWithFrame:CGRectMake(0,95,self.view.bounds.size.width,self.view.bounds.size.height-45)];
+    _mmGridView = [[MMGridView alloc] initWithFrame:CGRectMake(0,0,_gridContainer.bounds.size.width,_gridContainer.bounds.size.height)];
     [_mmGridView setDelegate:self];
     [_mmGridView setDataSource:self];
     [_mmGridView setBackgroundColor:[UIColor clearColor]];
-    [self.view addSubview:_mmGridView];
+    [_gridContainer addSubview:_mmGridView];
     
     _currentGrid = 2;
+    [_mmGridView reloadData];
 }
 
 
@@ -379,16 +377,18 @@
 
 - (void) setupOHGridView {    
     [_gridControlNameLabel   setText:@"OHGridView"];    
-    [_gridControlDetailLabel setText:@"View that display cells as a grid. Uses quite the same API as UITableView"];    
     [_gridControlNotesLabel  setText:@""];
     [_gridControlLinkLabel   setTitle:@"https://github.com/AliSoftware/OHGridView" forState:UIControlStateNormal];        
 
-    _ohGridView = [[OHGridView alloc] initWithFrame:CGRectMake(0,95,self.view.bounds.size.width,self.view.bounds.size.height-45)];
+    _ohGridView = [[OHGridView alloc] initWithFrame:CGRectMake(0,0,_gridContainer.bounds.size.width,_gridContainer.bounds.size.height)];
     [_ohGridView setDelegate:self];
     [_ohGridView setDataSource:self];
     [_ohGridView setBackgroundColor:[UIColor clearColor]];
-    [self.view addSubview:_ohGridView];  
+    [_ohGridView setAutoresizingMask:UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth];    
+    [_gridContainer addSubview:_ohGridView];  
+    
     _currentGrid = 3;    
+    [_ohGridView reloadData];
 }
 
 
