@@ -40,7 +40,7 @@
     - (void) setupOHGridView;
 
     // Test Data
-    - (void) createTestData;
+    - (void) createTestData:(int)numberOfColumns;
     - (UIColor*) generateRandomColor;
 
 @end
@@ -50,6 +50,8 @@
 @synthesize gridControlNotesLabel  = _gridControlNotesLabel;
 @synthesize gridControlLinkLabel   = _gridControlLinkLabel;
 @synthesize gridContainer          = _gridContainer;
+@synthesize gridColumnCountSlider  = _gridColumnCountSlider;
+
 
 - (void)dealloc {
     [_aqGridView release];
@@ -76,7 +78,7 @@
         
     _currentGrid = 2;
     
-    [self createTestData];    
+    [self createTestData:100];    
     
     [self setupMMGridView];
     
@@ -146,11 +148,11 @@
 }
 
 
-- (void) createTestData {
+- (void) createTestData:(int)numberOfColumns {
     _gridTestData = [[NSMutableArray alloc] init];      
 
     LoremIpsum *_loremGenerator = [[LoremIpsum alloc] init];
-    for ( int x = 0; x < 100; x++ ) {
+    for ( int x = 0; x < numberOfColumns; x++ ) {
         GridTestObject *_testObject = [[GridTestObject alloc] init];
         [_testObject setTestnumber:x];
         [_testObject setTestsentance:[_loremGenerator words:7]];
@@ -177,6 +179,30 @@
    [[ UIApplication sharedApplication ] openURL:[NSURL URLWithString:_gridControlLinkLabel.titleLabel.text]];    
 }
 
+- (IBAction) columnCountSliderChanged:(id)sender {
+    
+    [self createTestData:_gridColumnCountSlider.value];
+    
+    switch (_currentGrid) {
+        case 0:
+            [_aqGridView reloadData];
+            break;
+        case 1:
+            [_chGridView reloadData];
+            break;
+        case 2:
+            [_mmGridView reloadData];          
+            break;
+        case 3:
+            [_ohGridView reloadData];          
+            break;
+            
+        default:
+            break;
+    }    
+    
+    
+}
 
 #pragma mark =[ Grid Toolkit Helpers and Delegates ]=
 

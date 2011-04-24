@@ -38,9 +38,11 @@
 @property (nonatomic,retain) IBOutlet UILabel  *gridControlNameLabel;
 @property (nonatomic,retain) IBOutlet UILabel  *gridControlNotesLabel;
 @property (nonatomic,retain) IBOutlet UIButton *gridControlLinkLabel;                                        
+@property (nonatomic,retain) IBOutlet UISlider *gridColumnCountSlider;
 
 - (IBAction) changeGridToolkit:(id)sender;
 - (IBAction) openControlInSafari:(id)sender;
+- (IBAction) columnCountSliderChanged:(id)sender;
 
 /* Shared Generic Delegate Methods - AQ and OH have a same named datasource method */
 
