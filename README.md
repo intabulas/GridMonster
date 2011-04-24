@@ -3,7 +3,7 @@
 
 This was a lazy Saturday night experiment to test all the available "Grid" views for iOS development.  
 
-04/23/2001 - Initial Release - This first pass is just a basic example, more later
+04/23/2011 - Initial Release - This first pass is just a basic example, more later
 
 ## Danger Will Robinson, Sub Module Alert
 
