@@ -35,10 +35,10 @@
 }
 
 @property (nonatomic,retain) IBOutlet UIView   *gridContainer;                                                             
-@property (nonatomic,retain) IBOutlet UILabel  *gridControlNameLabel;
 @property (nonatomic,retain) IBOutlet UILabel  *gridControlNotesLabel;
 @property (nonatomic,retain) IBOutlet UIButton *gridControlLinkLabel;                                        
 @property (nonatomic,retain) IBOutlet UISlider *gridColumnCountSlider;
+@property (nonatomic,retain) IBOutlet UISlider *gridNumberOfCellsSlider;
 
 @property (nonatomic,retain) IBOutlet UIBarButtonItem *aqGridButton;
 @property (nonatomic,retain) IBOutlet UIBarButtonItem *chGridButton;
@@ -47,7 +47,9 @@
 
 - (IBAction) changeGridToolkit:(id)sender;
 - (IBAction) openControlInSafari:(id)sender;
+
 - (IBAction) columnCountSliderChanged:(id)sender;
+- (IBAction) numberOfCellsSliderChanged:(id)sender;
 
 /* Shared Generic Delegate Methods - AQ and OH have a same named datasource method */
 

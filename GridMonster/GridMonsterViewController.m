@@ -46,11 +46,11 @@
 @end
 
 @implementation GridMonsterViewController
-@synthesize gridControlNameLabel   = _gridControlNameLabel;
-@synthesize gridControlNotesLabel  = _gridControlNotesLabel;
-@synthesize gridControlLinkLabel   = _gridControlLinkLabel;
-@synthesize gridContainer          = _gridContainer;
-@synthesize gridColumnCountSlider  = _gridColumnCountSlider;
+@synthesize gridControlNotesLabel   = _gridControlNotesLabel;
+@synthesize gridControlLinkLabel    = _gridControlLinkLabel;
+@synthesize gridContainer           = _gridContainer;
+@synthesize gridColumnCountSlider   = _gridColumnCountSlider;
+@synthesize gridNumberOfCellsSlider = _gridNumberOfCellsSlider;
 
 @synthesize aqGridButton = _aqGridButton;
 @synthesize chGridButton = _chGridButton;
@@ -101,6 +101,22 @@
 
 //- (void) didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
 //}
+
+- (void) willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
+
+    if ( _currentGrid == 0 ) {
+        if ( UIInterfaceOrientationIsPortrait(toInterfaceOrientation) ) {
+            // width will be 768, which divides by four nicely already
+            [_aqGridView setLeftContentInset:0.0];
+            [_aqGridView setRightContentInset:0.0];
+            // width will be 1024, so subtract a little to get a width divisible by five
+        } else {
+            [_aqGridView setLeftContentInset:2.0];
+            [_aqGridView setRightContentInset:2.0];
+        }        
+    }
+    
+}
 
 - (void) teardownActiveGrid {
     switch (_currentGrid) {
@@ -185,7 +201,37 @@
 
 - (IBAction) columnCountSliderChanged:(id)sender {
     
-    [self createTestData:_gridColumnCountSlider.value];
+    switch (_currentGrid) {
+        case 0:
+            [_aqGridView reloadData];
+            break;
+        case 1:
+            [_chGridView setPerLine:_gridColumnCountSlider.value];
+            [_chGridView reloadData];
+            break;
+        case 2:
+            if ( UIInterfaceOrientationIsLandscape([[UIDevice currentDevice] orientation]) ) {
+                [_mmGridView setNumberOfRows:_gridColumnCountSlider.value];
+            } else {
+                [_mmGridView setNumberOfColumns:_gridColumnCountSlider.value];                
+            }
+            [_mmGridView reloadData];          
+            break;
+        case 3:
+            [_ohGridView setColumnsCount:_gridColumnCountSlider.value];
+            [_ohGridView reloadData];          
+            break;
+            
+        default:
+            break;
+    }    
+    
+    
+}
+
+- (IBAction) numberOfCellsSliderChanged:(id)sender {
+    
+    [self createTestData:_gridNumberOfCellsSlider.value];
     
     switch (_currentGrid) {
         case 0:
@@ -208,6 +254,7 @@
     
 }
 
+
 #pragma mark =[ Grid Toolkit Helpers and Delegates ]=
 
 
@@ -220,9 +267,10 @@
 
 - (void) setupAQGridView {    
     
+    [_gridColumnCountSlider setEnabled:NO];
+    
     [_aqGridButton setStyle:UIBarButtonItemStyleDone];    
     
-    [_gridControlNameLabel   setText:@"AQGridView"];
     [_gridControlNotesLabel  setText:@""];  
     [_gridControlLinkLabel   setTitle:@"https://github.com/AlanQuatermain/AQGridView" forState:UIControlStateNormal];
     
@@ -231,6 +279,13 @@
     [_aqGridView setDataSource:self];
     [_aqGridView setBackgroundColor:[UIColor clearColor]];
     [_aqGridView setAutoresizingMask:UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth];
+    [_aqGridView setAutoresizesSubviews:YES];
+    
+    
+    if ( UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation]) ){
+        _aqGridView.leftContentInset = 2.0;
+        _aqGridView.rightContentInset = 2.0;
+    }    
     
     [_gridContainer addSubview:_aqGridView];
 
@@ -292,9 +347,12 @@
 
 - (void) setupCHGridView {    
     
+    [_gridColumnCountSlider setEnabled:YES];
+    [_gridColumnCountSlider setValue:_chGridView.perLine];
+    
+    
     [_chGridButton setStyle:UIBarButtonItemStyleDone];    
     
-    [_gridControlNameLabel   setText:@"CHGridView"];   
     [_gridControlNotesLabel  setText:@""];
     [_gridControlLinkLabel   setTitle:@"https://github.com/camh/CHGridView" forState:UIControlStateNormal];    
     
@@ -362,9 +420,11 @@
 
 - (void) setupMMGridView {    
     
+    [_gridColumnCountSlider setEnabled:YES];
+    [_gridColumnCountSlider setValue:_mmGridView.numberOfColumns];    
+    
     [_mmGridButton setStyle:UIBarButtonItemStyleDone];    
     
-    [_gridControlNameLabel   setText:@"MMGridView"];    
     [_gridControlNotesLabel  setText:@"This grid view scrolls left to right vs up and down"];
     [_gridControlLinkLabel   setTitle:@"https://github.com/provideal/MMGridView" forState:UIControlStateNormal];        
     
@@ -421,9 +481,12 @@
 
 - (void) setupOHGridView {    
     
+    [_gridColumnCountSlider setEnabled:YES];
+    
+    [_gridColumnCountSlider setValue:_ohGridView.columnsCount];
+    
     [_ohGridButton setStyle:UIBarButtonItemStyleDone];    
     
-    [_gridControlNameLabel   setText:@"OHGridView"];    
     [_gridControlNotesLabel  setText:@""];
     [_gridControlLinkLabel   setTitle:@"https://github.com/AliSoftware/OHGridView" forState:UIControlStateNormal];        
 
